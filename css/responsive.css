@@ -1,0 +1,31 @@
+@media (max-width: 1200px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .info-panels {
+    flex-direction: column;
+  }
+
+  .footer-section {
+    flex-direction: column;
+  }
+
+  .total-display {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .action-bar {
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    min-width: calc(25% - 6px);
+  }
+
+  .menu-bar {
+    overflow-x: auto;
+  }
+}

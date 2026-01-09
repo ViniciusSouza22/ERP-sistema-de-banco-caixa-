@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema caixa</title>
+    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/panels.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+  <body>
+    <div id="app">
+      <header class="header">
+        <div class="header-left">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <h1>Sistema caixa eletronico</h1>
+        </div>
+       
+      </header>
+
+      <nav class="menu-bar">
+        <button class="menu-item active">Vendas</button>
+      </nav>
+
+      <main class="main-content">
+        <section class="search-section">
+          <div class="search-row">
+            <label>Leitura: (Código de Barras, Código Reduzido, Descrição Produto)</label>
+            <input type="text" id="search-input" class="search-input" autocomplete="off" placeholder="Digite o código ou descrição e pressione Enter">
+            <div class="stock-info">
+              <label>Estoque:</label>
+              <span id="stock-value" class="stock-value">0</span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Laboratório:</label>
+              <input type="text" id="laboratory" readonly>
+            </div>
+            <div class="form-group">
+              <label>Localização:</label>
+              <input type="text" id="location" readonly>
+            </div>
+            <div class="form-group">
+              <label>Código de Barras:</label>
+              <input type="text" id="barcode" readonly>
+            </div>
+            <div class="form-group">
+              <label>Código Reduzido:</label>
+              <input type="text" id="reduced-code" readonly>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Quantidade:</label>
+              <input type="number" id="quantity" value="1" min="1" step="1">
+            </div>
+            <div class="form-group">
+              <label>Valor Unitário:</label>
+              <input type="text" id="unit-price" value="0,00" readonly>
+            </div>
+            <div class="form-group">
+              <label>% Desconto:</label>
+              <input type="number" id="discount" value="0,00" min="0" max="100" step="0.01">
+            </div>
+            <div class="form-group">
+              <label>Valor Unitário Líquido:</label>
+              <input type="text" id="net-unit-price" value="0,0000" readonly>
+            </div>
+          </div>
+        </section>
+
+        <section class="items-section">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Produto</th>
+                <th>Unidade</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>% Desconto</th>
+                <th>Total Item</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="items-tbody">
+              <!-- Itens serão adicionados aqui via JavaScript -->
+            </tbody>
+          </table>
+        </section>
+
+        <section class="footer-section">
+          <div class="info-panels">
+            <div class="info-panel">
+              <h3>Dados Item</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>ECF:</label>
+                  <span id="ecf-value">ECF 001</span>
+                </div>
+                <div class="info-item">
+                  <label>Valor Desconto Item:</label>
+                  <span id="item-discount-value">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Caixa/Operador:</label>
+                  <span id="cashier-operator">CAIXA 01 - OPERADOR 001</span>
+                </div>
+                <div class="info-item">
+                  <label>Valor Item com Desconto:</label>
+                  <span id="item-with-discount">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Venda:</label>
+                  <span id="sale-number">531328</span>
+                </div>
+                <div class="info-item">
+                  <label>Desconto Máximo:</label>
+                  <span id="max-discount">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item"></div>
+                <div class="info-item">
+                  <label>Valor com Desconto Máximo:</label>
+                  <span id="max-discount-value">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item"></div>
+                <div class="info-item">
+                  <label>Origem Desconto:</label>
+                  <span id="discount-origin">Cadastro de Produtos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-panel">
+              <h3>Dados Venda</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Emissão:</label>
+                  <span id="emission-date">06/01/2026 11:01:13</span>
+                </div>
+                <div class="info-item totals-right">
+                  <label>Total Líquido:</label>
+                  <span id="net-total" class="highlight-value">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Itens:</label>
+                  <span id="total-items">0</span>
+                </div>
+                <div class="info-item"></div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Unidades:</label>
+                  <span id="total-units">0</span>
+                </div>
+                <div class="info-item totals-right">
+                  <label>Total Bruto:</label>
+                  <span id="gross-total">0,00</span>
+                </div>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Total Desconto:</label>
+                  <span id="total-discount">0,00</span>
+                </div>
+                <div class="info-item"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="total-display">
+            <span class="total-label">Total Líquido:</span>
+            <span id="total-display" class="total-value">0,00</span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="action-bar">
+        <button class="action-btn" data-key="F1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="9" y1="3" x2="9" y2="21"/>
+          </svg>
+          <span>Mais Funções</span>
+          <span class="key-hint">F1</span>
+        </button>
+        <button class="action-btn" data-key="F2" id="btn-finalizar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          <span>Finalizar</span>
+          <span class="key-hint">F2</span>
+        </button>
+        <button class="action-btn" data-key="F3" id="btn-exclude">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span>Excluir</span>
+          <span class="key-hint">F3</span>
+        </button>
+        <button class="action-btn" data-key="F9" id="btn-add-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+          <span>Incluir Item</span>
+          <span class="key-hint">F9</span>
+        </button>
+        <button class="action-btn" data-key="F10" id="btn-finalizacao-agil">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          <span>Finalização Ágil</span>
+          <span class="key-hint">F10</span>
+        </button>
+        <button class="action-btn" data-key="Ctrl+I" id="btn-imprimir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          <span>Imprimir DAV</span>
+          <span class="key-hint">Ctrl+I</span>
+        </button>
+        <button class="action-btn" data-key="Esc" id="btn-sair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18.36 6.64a9 9 0 11-12.73 0"/>
+            <line x1="12" y1="2" x2="12" y2="12"/>
+          </svg>
+          <span>Sair</span>
+          <span class="key-hint">Esc</span>
+        </button>
+      </footer>
+
+      <div id="status-bar" class="status-bar">
+        Venda Dav
+      </div>
+    </div>
+    
+    <!-- Inline JavaScript para inicialização imediata -->
+    <script>
+      // Inicializar algumas variáveis globais que serão usadas
+      window.produtosDB = [];
+      window.carrinho = [];
+      window.produtoSelecionado = null;
+      window.appInicializado = false;
+    </script>
+    
+    <!-- Agora sim carrega o JavaScript principal -->
+    <script src="js/app.js"></script>
+    <script src="js/danfe.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/funcoes-auxiliares.js"></script>
+    <script src="js/funcoes-tabela-e-uteis.js"></script>
+    <script src="js/vars-e-inicializacao.js"></script>
+
+    <!-- Script para garantir que tudo seja inicializado -->
+    <script>
+      // Esperar o DOM estar completamente carregado
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM carregado, aguardando main.js...');
+        
+        // Se main.js não inicializar automaticamente, forçar após um tempo
+        setTimeout(function() {
+          if (!window.appInicializado) {
+            console.log('Tentando inicializar manualmente...');
+            // Chamar função de inicialização se existir
+            if (typeof window.inicializarApp === 'function') {
+              window.inicializarApp();
+            }
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
